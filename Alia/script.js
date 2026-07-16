@@ -17,7 +17,7 @@ muteButton.addEventListener('click', function() {
 const copyButton = document.getElementById('copy');
 
 // The manual text you want to copy to the clipboard
-const textToCopy = "This is the manual text you want to copy!";
+const textToCopy = "https://graphic-st2dy.github.io/Profile/Alia/";
 
 // Add the click event listener
 copyButton.addEventListener('click', function() {
