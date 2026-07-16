@@ -39,7 +39,8 @@ body, html {
     font-size: 1.2rem;
     font-weight: 300;
     margin-bottom: 2.5rem;
-    margin-top: -1rem;
+    display: flex;
+    margin-top: 1rem;
 }
 
 .owner-name {
@@ -67,7 +68,6 @@ body, html {
     border: solid 1px white;
     border-radius: 20px;
     padding: 0px 2rem 5px 2rem;
-    display: block;
     align-content: center;
     align-items: center;
     justify-items: center;
