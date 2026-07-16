@@ -34,8 +34,7 @@ const dialo = document.getElementById('dialo');
 clickSound.addEventListener('canplaythrough', () => {
   // The audio is loaded! Make the dialog visible.
   dialo.style.display = 'block';
-  console.log("Audio loaded successfully. Dialog is now visible.");
-}, { once: true });
+  }, { once: true });
 
 starto.addEventListener('click', function() {
     // Make the button invisible, but keep its blank space
