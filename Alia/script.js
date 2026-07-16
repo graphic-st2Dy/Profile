@@ -1,16 +1,46 @@
 // Add your custom life quotes here
 const quotes = [
-    "ئەگەر گوڵ نیت، دڕکیش مەبە",
-    "ژیان نادادپەروەرە، بەڵام خودا دادپەروەرە",
-    "Your time is limited, so don't waste it living someone else's life.",
-    "Do what you can, with what you have, where you are."
+    "Judge me when you are perfect.",
+    "Once is a mistake \n Twice is a choice.",
+    "close the window that hurts you, \n no matter how beautiful the view is",
+    "Sometimes you win. \n Sometimes you learn."
 ];
 
+const soundSwitch = document.getElementById('sondy');
 const muteButton = document.getElementById('un-mute');
 
-muteButton.addEventListener('click', function() {
+
+soundSwitch.addEventListener('click', () => {
+  // Check if the icon is currently 'fa-volume-up'
+  if (soundSwitch.classList.contains('fa-volume-up')) {
+    // Remove 'fa-volume-up' and add 'fa-volume-mute'
+    soundSwitch.classList.remove('fa-volume-up');
+    soundSwitch.classList.add('fa-volume-mute');
+      clickSound.volume = 0;
+  } else {
+    // Otherwise, reverse the change
+    soundSwitch.classList.remove('fa-volume-mute');
+    soundSwitch.classList.add('fa-volume-up');
+      clickSound.volume = 1;
+  }
+});
+
+const clickSound = new Audio('music.mp3');
+
+const starto = document.getElementById('start');
+const morphin = document.getElementById('morph');
+const dialo = document.getElementById('dialo');
+
+clickSound.addEventListener('canplaythrough', () => {
+  // The audio is loaded! Make the dialog visible.
+  dialo.style.display = 'block';
+  console.log("Audio loaded successfully. Dialog is now visible.");
+}, { once: true });
+
+starto.addEventListener('click', function() {
     // Make the button invisible, but keep its blank space
-    muteButton.style.visibility = 'hidden';
+    morphin.style.visibility = 'hidden';
+    clickSound.play();
 });
 
 // Select the copy button by its ID
@@ -25,7 +55,8 @@ copyButton.addEventListener('click', function() {
     navigator.clipboard.writeText(textToCopy)
         .then(() => {
             // Once the copy is successful, make the button gone
-            copyButton.style.display = 'none'; 
+            copyButton.style.color = '#22ff22'; 
+            copyButton.style.borderColor = '#22ff22'
             
             // Note: If you want to keep the blank space, use this instead:
             // copyButton.style.visibility = 'hidden';
