@@ -35,32 +35,49 @@ const starto = document.getElementById('start');
 const morphin = document.getElementById('morph');
 const dialo = document.getElementById('dialo');
 
-clickSound.addEventListener('canplaythrough', () => {
-  // The audio is loaded! Make the dialog visible.
-  dialo.style.display = 'block';
-  }, { once: true });
+// Remove or replace the canplaythrough listener:
+document.addEventListener('DOMContentLoaded', () => {
+  // Display the dialog modal immediately when the page structure is ready
+  if (dialo) {
+    dialo.style.display = 'flex'; // Use flex to match your dialog flex layout
+  }
+});
+
+// Audio preloading optional fix for iOS:
+clickSound.load();
+
 
 starto.addEventListener('click', function() {
-    // Make the button invisible, but keep its blank space
-    morphin.style.visibility = 'hidden';
-    clickSound.currentTime = 80;
-    clickSound.volume = 0;
-    clickSound.play();
-    // Gradually increase the volume
-    const fadeDuration = 10000; // Total fade-in time in milliseconds (3 seconds)
-    const intervalTime = 100;  // How often to increase volume (every 0.1 seconds)
-    let volumeStep = 0.01; // How much to increase each step (~0.033)
-    volumeStep = volumeStep + 0.01;
-    const fadeInterval = setInterval(() => {
-      if (clickSound.volume < 1.0) {
-        // Prevent volume exceeding the maximum limit of 1.0
-        clickSound.volume = pot * Math.min(clickSound.volume + volumeStep, 1);
-      } else {
-        // Stop the timer once we reach full volume
-        clearInterval(fadeInterval);
-      }
-    }, intervalTime);
+    // Hide overlay modal immediately
+    morphin.style.display = 'none'; // Completely remove from layout instead of 'hidden'
+    
+    // Play audio safely
+    try {
+        clickSound.currentTime = 80;
+        clickSound.volume = 0;
+        let playPromise = clickSound.play();
+        
+        if (playPromise !== undefined) {
+            playPromise.then(() => {
+                // Fade-in logic
+                const intervalTime = 100;
+                let volumeStep = 0.02;
+                const fadeInterval = setInterval(() => {
+                    if (clickSound.volume < 1.0) {
+                        clickSound.volume = pot * Math.min(clickSound.volume + volumeStep, 1);
+                    } else {
+                        clearInterval(fadeInterval);
+                    }
+                }, intervalTime);
+            }).catch(error => {
+                console.log("Audio playback blocked or failed:", error);
+            });
+        }
+    } catch (e) {
+        console.error("Audio error:", e);
+    }
 });
+
 
 // Select the copy button by its ID
 const copyButton = document.getElementById('copy');
